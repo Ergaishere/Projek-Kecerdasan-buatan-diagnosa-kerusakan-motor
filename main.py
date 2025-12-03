@@ -1,4 +1,5 @@
 import pandas as pd
+import numpy as np   
 from sklearn.tree import DecisionTreeClassifier, plot_tree
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
@@ -20,7 +21,6 @@ y = data["kerusakan"]
 
 
 
-
 X_train, X_test, y_train, y_test = train_test_split(
     X, y, test_size=0.3, random_state=42
 )
@@ -29,16 +29,15 @@ X_train, X_test, y_train, y_test = train_test_split(
 model = DecisionTreeClassifier(
     criterion="entropy",
     max_depth=4,
-    min_samples_leaf=1,
     random_state=42
 )
+
 
 model.fit(X_train, y_train)
 
 
 y_pred = model.predict(X_test)
 acc = accuracy_score(y_test, y_pred)
-
 print("=== AKURASI MODEL ===")
 print("Akurasi:", acc)
 print()
@@ -52,17 +51,18 @@ boros = int(input("Boros BBM? (1 ya, 0 tidak): "))
 susah_starter = int(input("Susah starter? (1 ya, 0 tidak): "))
 knalpot_nembak = int(input("Knalpot nembak? (1 ya, 0 tidak): "))
 
-gejala_user = [[
+
+gejala_array = np.array([[           
     brebet,
     mati_tiba,
     lampu_redup,
     boros,
     susah_starter,
     knalpot_nembak
-]]
+]])
 
 
-hasil = model.predict(gejala_user)
+hasil = model.predict(gejala_array)
 print("\n>> HASIL DIAGNOSA :", hasil[0])
 
 
